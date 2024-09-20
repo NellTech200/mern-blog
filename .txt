@@ -1,0 +1,46 @@
+// this is the full guide to the mern app built. 
+ in this project, we will be using react, mongodb 
+
+ the original source code is from (github.com/sahandghavidel/mern-blog)
+// Briliant is the website that has courses where you can learn anything including algorithme and data structure.
+//
+
+
+// PART ONE : INSTALL REACT.JS AND TAILWIND CSS AND CREATE THE FIRST TEMPLATE.
+   . We start by creating a folder and open it in vs code (code .)
+   . We run the command (npm create vite@latest)
+     * we start by creating a client side project or directory by giving the name client
+     * we cd client, after that we do npm install to install all the dependencies.
+     * we install tailwind css using (we do that by searching for tailwind css vite in a new browser tab).
+      # npm install -D tailwindcss postcss autoprefixer
+      # npx tailwind init -p
+    * we configure by just pasting in to the tailwind.config.js with the content provided in the website.
+    * we go to index.css and paste the 3 lines of code to apply basic classes of tailwind css
+    * EXTENSIONS (ES7+ React/Redux/React-Native snippets, Auto Rename Tag, GitHub Copilot, Multiple cursor case preserver, prettier-Code formatter, Tailwind css IntelliSense)
+    * at the end we run npm run dev to test everything.
+       // clear the App.jsx and replace with rfc (react functional component).
+       // b4 then we need to delete the (app.css, vite.svg in the public, react.svg in the assets and set the title to Mern-Blog)
+
+
+// PART TWO : CREATE A GITHUB REPOSITORY.
+   . We initialise a github repository in the root directory i.e in the MERN-BLOG directory.
+   . the github repo is there to help us track all the changes in our code. 
+
+
+
+// PART THREE : CREATING PAGES AND ROUTES 
+   . We go to clien and creat another folder called pages.
+   . we create, signIn,singUp,Dashboard,Home,Projects.jsx
+   . to access these pages, we neet to install React-Router-Dom (npm i react-router-dom), all is done in the APP.jsx
+
+
+
+// PART 4 : WORKING ON THE HEADER SECTION (COMPONENT)
+   . We create a component folder and create a file in it called header.jsx 
+   . we then add it to app.jsx so we add it to the BrowserRouter but out side of Routes.
+   . We will be using FlowBite for the header which is created using Tailwind css but it's like a bootstrap and customiseable.
+   . so search for flowbite react. com 
+   . (npm i flowbite-react) this is done in the client directory.
+   . i added a code ('node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}') to my tailwind.config.js file 
+   . and also added this [require('flowbite/plugin)] which is a plugin.
+   . at the end, we run our application again.

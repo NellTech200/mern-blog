@@ -70,13 +70,19 @@ export const google = async (req,res,next) => {
         const user = await User.findOne({email});
         if (user) {
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
+            
+            // the code bellow seperates the password from the rest. 
             const {password, ...rest} = user._doc;
+
             res.status(200).cookie('access_token', token, {
                 httpOnly: true,
             }).json(rest);
         } else {
+            // what if the email does not exist
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+            // the user name is created with a hashed password too which can be moddified later.
             const newUser = new User({
                 username: name.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4),
                 email,

@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js';
 
 dotenv.config();
 
+// the mongose.connect helps us to connect to mongodb
 mongoose.connect(
     process.env.MONGO
 ).then(() => {
@@ -17,6 +18,7 @@ mongoose.connect(
 
 const app = express();
 
+//
 app.use(express.json());
 
 app.listen(3000, () => {
@@ -27,6 +29,7 @@ app.listen(3000, () => {
 app.use('/api/user', userRoutes);
 app.use ('/api/auth', authRoutes);
 
+// an API generally have a rout, a req and a res 
 app.use((err, req, res, next) => {
     const statusCode = err.statuscode || 500;
     const message = err.message || 'Internal Server Error';

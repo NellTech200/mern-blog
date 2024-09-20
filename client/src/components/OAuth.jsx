@@ -18,7 +18,10 @@ export default function OAuth() {
 
     console.log('starting the handle');
     const provider = new GoogleAuthProvider()
+
+    // the setCustomParameter will always promt the user to choose which email to use, either login or signup.
     provider.setCustomParameters({ prompt: 'select_account' })
+    
     try {
       const resultsFromGoogle = await signInWithPopup (auth, provider)
       console.log('results from google:', resultsFromGoogle);
@@ -43,6 +46,8 @@ export default function OAuth() {
       console.log(error);
     }
   }
+
+  // the button has the type button bc we r not submitting
   return (
     <Button type='button' gradientDuoTone='pinkToOrange' outline onClick={handleGoogleClick}>
         <AiFillGoogleCircle className = 'w-6 h-6 mr-2' />
