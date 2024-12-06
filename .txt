@@ -67,3 +67,6 @@ service firebase.storage {
 }
 
 // int (main => (if ))
+
+
+there is a package called react-quil that helps to have text input fields 
