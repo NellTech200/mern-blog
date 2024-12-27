@@ -11,8 +11,6 @@ export default function DashPosts() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState('');
-
-  console.log(userPosts);
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -121,7 +119,7 @@ export default function DashPosts() {
                 </Table.Cell>
 
                 <Table.Cell>
-                  <Link className='text-teal-500 hover:underline' to = {`/update-post/${post.id}`}>
+                  <Link className='text-teal-500 hover:underline' to = {`/update-post/${post._id}`}>
                     <span>
                       Edit 
                     </span>
