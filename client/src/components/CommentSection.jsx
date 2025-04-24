@@ -1,16 +1,20 @@
 import { Alert, Button, Textarea, TextInput } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { use } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Comment from './Comment'
 
-export default function CommentSection(postId) {
-  const { currentUser} = useSelector(state => state.user)
+export default function CommentSection({ postId }) {
+  const { currentUser} = useSelector((state) => state.user)
   const [comment, setComment] = useState('');
-  const [commentError, setCommentError] = useState('');
+  const [commentError, setCommentError] = useState(null);
+  const [comments, setComments] = useState([]);
+  console.log(comments);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (comment.length < 200) {
+    if (comment.length > 200) {
       return;
     }
 
@@ -23,19 +27,39 @@ export default function CommentSection(postId) {
         body: JSON.stringify({
           content: comment,
           postId: postId,
-          userId: currentUser._id,
+          userId: currentUser._id
         }),
       });
       const data = await res.json();
       if (res.ok) {
         setComment('');
         setCommentError(null);
+        setComments([data, ...comments]);
+        
       }
     } catch (error) {
       setCommentError(error.message);
     }
   
   };
+
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const res = await fetch(`/api/comment/getPostcomments/${postId}`);
+        
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data);
+          //setComments(data.comments || []);
+        }
+      } catch (error) {
+        console.log(error.message
+        );
+      }
+    }
+    getComments();
+  }, [postId]);
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
       {currentUser ? 
@@ -68,7 +92,7 @@ export default function CommentSection(postId) {
             value={comment}
             />
 
-          <div className='flex justify-between items-center mt5'>
+          <div className='flex justify-between items-center mt-5'>
             <p className='text-gray-500 text-xs'>{200 - comment.length} characters remaining</p>
             <Button outline gradientDuoTone='purpleToBlue' type='submit'>
               Submit
@@ -81,6 +105,28 @@ export default function CommentSection(postId) {
           )}
           
         </form>
+      )}
+
+      {comments?.length === 0 ? (
+        <p className='text-sm my-5'>No comments yet!</p>
+      ): (
+        <>
+          <div className="text-sm my-5 flex items-center gap-1">
+            <p>Comments</p>
+            <div className='border border-gray-400 py-1 px-2 rounded-sm'>
+              <p>{comments?.length ?? 0}</p>
+            </div>
+          </div>
+          { //Array.isArray(comment) &&
+            comments.map(comment => (
+              <Comment
+                key={comment._id}
+                comment={comment} 
+              />
+            ))
+            
+          }
+        </>
       )}
     </div>
   )
