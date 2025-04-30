@@ -6,7 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
-
+import path from 'path';
 dotenv.config();
 
 // the mongose.connect helps us to connect to mongodb
@@ -18,6 +18,8 @@ mongoose.connect(
 .catch((err) => {
     console.log(err);
 });
+
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -34,6 +36,16 @@ app.use('/api/user', userRoutes);
 app.use ('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
+
+app.use(express.static(path.join(__dirname, '/client/build')));
+// this is to serve the static files from the client/build folder
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  });
+// this is to serve the index.html file from the client/build folder
+
 
 // an API generally have a rout, a req and a res 
 app.use((err, req, res, next) => {
